@@ -92,7 +92,7 @@ int main(void) {
             else if (value == "c") {
                 A = A + c;
             }
-            
+
         }
 
         PC++;
@@ -100,7 +100,16 @@ int main(void) {
         if (PC >= program.size()) {
             break;
         }
+
+        //HALT命令の場合
+        else if (command == "HALT") {
+            cout << "CPU停止" << endl;
+            break;
+        }
+        
     }
+
+    
 
     cout << endl;
 
