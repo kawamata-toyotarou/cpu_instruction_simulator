@@ -95,10 +95,18 @@ int main(void) {
 
         }
 
-        PC++;
+        //SUB命令の場合
+        else if (command == "SUB") {
 
-        if (PC >= program.size()) {
-            break;
+            if (value == "a") {
+                A = A - a;
+            }
+            else if (value == "b") {
+                A = A - b;
+            }
+            else if (value == "c") {
+                A = A - c;
+            }
         }
 
         //HALT命令の場合
@@ -106,7 +114,13 @@ int main(void) {
             cout << "CPU停止" << endl;
             break;
         }
-        
+
+        PC++;
+
+        if (PC >= program.size()) {
+            break;
+        }
+
     }
 
     
