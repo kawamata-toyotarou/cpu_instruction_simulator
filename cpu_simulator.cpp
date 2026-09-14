@@ -66,6 +66,35 @@ int main(void) {
             }
         }
 
+        //LOAD命令の場合
+        else if (command == "LOAD") {
+
+            if (value == "a") {
+                A = a;
+            }
+            else if (value == "b") {
+                A = b;
+            } 
+            else if (value == "c") {
+                A = c;
+            }
+        }
+
+        //ADD命令
+        else if (command == "ADD") {
+
+            if (value == "a") {
+                A = A + a;
+            }
+            else if (value == "b") {
+                A = A + b;
+            }
+            else if (value == "c") {
+                A = A + c;
+            }
+            
+        }
+
         PC++;
 
         if (PC >= program.size()) {
