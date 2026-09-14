@@ -27,9 +27,21 @@ int main(void) {
     int b = 0;
     int c = 0;
 
-    for (int i = 0; i < program.size(); i++) {
-        cout << program.at(i) << endl;
+    //プログラムカウンタ
+    int PC = 0;
+
+    while (true) {
+
+        cout << "PC = " << PC << endl;
+        cout << "命令 = " << program.at(PC) << endl;
+
+        PC++;
+
+        if (PC > program.size()) {
+            break;
+        }
     }
 
     return 0;
+
 }
