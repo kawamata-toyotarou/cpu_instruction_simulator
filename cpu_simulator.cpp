@@ -1,8 +1,23 @@
 #include <iostream>
+#include <vector>
+#include <string>
 
 using namespace std;
 
 int main(void) {
+
+
+    //CPUが実行する命令
+    vector<string> program = {
+        "LDI 3",
+        "STO a",
+        "LDI 2",
+        "STO b",
+        "LOAD a",
+        "ADD b",
+        "STO c",
+        "HALT"
+    };
 
     //レジスタ
     int A = 0;
@@ -12,33 +27,9 @@ int main(void) {
     int b = 0;
     int c = 0;
 
-    //LDI 3
-    A = 3;
-
-    //STO a
-    a =A;
-
-    //LDI 2
-    A = 2;
-
-    //STO b
-    b = A;
-
-    //LOAD a
-    A = a;
-
-    //ADD b
-    A = A + b;
-
-    //STO c
-    c = A;
-
-    //HALT
-    cout << "停止しました" << endl;
-
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
-    cout << "c = " << c << endl;
+    for (int i = 0; i < program.size(); i++) {
+        cout << program.at(i) << endl;
+    }
 
     return 0;
 }

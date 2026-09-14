@@ -6,10 +6,10 @@
 
 CPUの命令がどのように実行されるのかを理解する。
 
-## 説明
+## 実行の仕方
 g++ cpu_simulator.cpp -o cpu_simulator
 
 -oは出力する実行ファイルの名前を指定するというオプション。
-このコマンドで実行ファイルcpu_simulator.exeを作成した。
+このコマンドで実行ファイルcpu_simulator.exeを作成する。
 
 .\cpu_simulator.exeで行ファイルを実行できる。
