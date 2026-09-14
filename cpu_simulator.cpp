@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -35,12 +36,19 @@ int main(void) {
 
         string instruction = program.at(PC);
 
+        //<sstream>のstringstreamを用いれは "LDI 3"を"LDI"と3にできる
+        stringstream ss(instruction);
+
+        string command;
+        int value;
+        ss  >> command >> value;
+
         cout << "PC = " << PC << endl;
         cout << "命令 = " << instruction << endl;
 
         //LDI命令の場合
-        if (instruction == "LDI 3") {
-            A = 3;
+        if (instruction == "LDI") {
+            A = value;
         }
 
         PC++;
