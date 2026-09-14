@@ -32,8 +32,16 @@ int main(void) {
 
     while (true) {
 
+
+        string instruction = program.at(PC);
+
         cout << "PC = " << PC << endl;
-        cout << "命令 = " << program.at(PC) << endl;
+        cout << "命令 = " << instruction << endl;
+
+        //LDI命令の場合
+        if (instruction == "LDI 3") {
+            A = 3;
+        }
 
         PC++;
 
@@ -41,6 +49,8 @@ int main(void) {
             break;
         }
     }
+
+    cout << "A= " << A << endl;
 
     return 0;
 
