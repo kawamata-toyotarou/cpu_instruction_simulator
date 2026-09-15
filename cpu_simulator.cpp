@@ -10,11 +10,8 @@ int main(void) {
 
     //CPUが実行する命令
     vector<string> program = {
-        "LDI 5",
-        "INC",
-        "INC",
-        "DEC",
-        "STO a",
+        "READ",
+        "WRITE",
         "HALT"
     };
 
@@ -117,6 +114,16 @@ int main(void) {
             A = A - 1;
         }
 
+        //read命令の追加
+        else if (command == "READ") {
+            cin >> A;
+        }
+
+        //write命令の追加
+        else if (command == "WRITE") {
+            cout << A << endl;
+        }
+
         //HALT命令の場合
         else if (command == "HALT") {
             cout << "CPU停止" << endl;
@@ -131,7 +138,6 @@ int main(void) {
 
     }
 
-    
 
     cout << endl;
 
