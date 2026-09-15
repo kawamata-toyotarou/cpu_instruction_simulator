@@ -10,18 +10,22 @@ int main(void) {
 
     //CPUが実行する命令
     vector<string> program = {
-        "READ",
-        "WRITE",
-        "HALT"
+    "LDI 10",
+    "STO 3",
+    "LDI 5",
+    "ADD 3",
+    "STO 4",
+    "LOAD 4",
+    "JMP 1",
+    "WRITE",
+    "HALT"
     };
 
     //レジスタ
     int A = 0;
 
     //メモリ
-    int a = 0;
-    int b = 0;
-    int c = 0;
+    vector<int> memory(10, 0);
 
     //プログラムカウンタ
     int PC = 0;
@@ -49,59 +53,26 @@ int main(void) {
 
         //STO命令の場合
         else if (command == "STO") {
-            
-            if (value == "a") {
-                a = A;
-            }
-            else if (value == "b") {
-                b = A;
-            }
-            else if (value == "c") {
-                c = A;
-            }
+            int address = stoi(value);
+            memory.at(address) = A;
         }
 
         //LOAD命令の場合
         else if (command == "LOAD") {
-
-            if (value == "a") {
-                A = a;
-            }
-            else if (value == "b") {
-                A = b;
-            } 
-            else if (value == "c") {
-                A = c;
-            }
+            int address = stoi(value);
+            A = memory.at(address);
         }
 
         //ADD命令
         else if (command == "ADD") {
-
-            if (value == "a") {
-                A = A + a;
-            }
-            else if (value == "b") {
-                A = A + b;
-            }
-            else if (value == "c") {
-                A = A + c;
-            }
-
+            int address = stoi(value);
+             A = A + memory.at(address);
         }
 
         //SUB命令の場合
         else if (command == "SUB") {
-
-            if (value == "a") {
-                A = A - a;
-            }
-            else if (value == "b") {
-                A = A - b;
-            }
-            else if (value == "c") {
-                A = A - c;
-            }
+            int address = stoi(value);
+            A = A - memory.at(address);
         }
 
         //INC命令の実行
@@ -124,6 +95,12 @@ int main(void) {
             cout << A << endl;
         }
 
+        //JMPの追加
+        else if (command == "JMP") {
+            PC = stoi(value);
+            continue;
+        }
+
         //HALT命令の場合
         else if (command == "HALT") {
             cout << "CPU停止" << endl;
@@ -138,14 +115,8 @@ int main(void) {
 
     }
 
-
     cout << endl;
-
-    cout << "A = " << A << endl;
-    cout << "a = " << a << endl;
-    cout << "b = " << b << endl;
-    cout << "c = " << c << endl;
-
+    
     return 0;
 
 }
