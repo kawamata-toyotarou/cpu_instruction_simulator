@@ -10,13 +10,11 @@ int main(void) {
 
     //CPUが実行する命令
     vector<string> program = {
-        "LDI 3",
+        "LDI 5",
+        "INC",
+        "INC",
+        "DEC",
         "STO a",
-        "LDI 2",
-        "STO b",
-        "LOAD a",
-        "ADD b",
-        "STO c",
         "HALT"
     };
 
@@ -107,6 +105,16 @@ int main(void) {
             else if (value == "c") {
                 A = A - c;
             }
+        }
+
+        //INC命令の実行
+        else if (command == "INC") {
+            A = A + 1;
+        }
+
+        //DEC命令の実行
+        else if (command == "DEC") {
+            A = A - 1;
         }
 
         //HALT命令の場合
