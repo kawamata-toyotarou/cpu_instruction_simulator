@@ -10,13 +10,11 @@ int main(void) {
 
     //CPUが実行する命令
     vector<string> program = {
-    "LDI 10",
-    "STO 3",
-    "LDI 5",
-    "ADD 3",
-    "STO 4",
-    "LOAD 4",
-    "JMP 1",
+    "LDI 0",
+    "JZERO 4",
+    "LDI 100",
+    "JMP 5",
+    "LDI 200",
     "WRITE",
     "HALT"
     };
@@ -99,6 +97,14 @@ int main(void) {
         else if (command == "JMP") {
             PC = stoi(value);
             continue;
+        }
+
+        //JZERO命令の実装
+        else if (command == "JZERO") {
+            if (A == 0) {
+                PC = stoi(value);
+                continue;
+            }
         }
 
         //HALT命令の場合
