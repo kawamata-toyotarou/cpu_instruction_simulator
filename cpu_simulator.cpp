@@ -3,6 +3,15 @@
 #include <string>
 #include <sstream>
 
+/*標準ライブラリ関数忘れた時用メモ*/
+//push_back() データを末尾に追加
+//pop_back() 末尾のデータを削除
+//back() 末尾のデータを取得
+//size() データの個数を取得
+//empty() 空かどうかを確認
+//sort() データを並べ替え
+//reverse() 順番を逆にする
+
 using namespace std;
 
 int main(void) {
@@ -10,13 +19,17 @@ int main(void) {
 
     //CPUが実行する命令
     vector<string> program = {
-    "LDI 0",
-    "JZERO 4",
-    "LDI 100",
-    "JMP 5",
-    "LDI 200",
-    "WRITE",
-    "HALT"
+        "LDI 5",
+        "BSS 6",      
+        "WRITE",
+        "HALT",
+
+        "LDI 0",      
+        "LDI 0",      
+
+        "ADD 0",      
+        "INC",         
+        "BRSA",       
     };
 
     //レジスタ
@@ -24,6 +37,9 @@ int main(void) {
 
     //メモリ
     vector<int> memory(10, 0);
+
+    // 戻り先を保存するスタック
+    vector<int> stack;
 
     //プログラムカウンタ
     int PC = 0;
@@ -105,6 +121,28 @@ int main(void) {
                 PC = stoi(value);
                 continue;
             }
+        }
+
+        //JGTZ命令
+        else if (command == "JGTZ") {
+            if (A > 0) {
+                PC = stoi(value);
+                continue;
+            }
+        }
+
+        //BSS命令
+        else if (command == "BSS") {
+            stack.push_back(PC + 1);
+            PC = stoi(value);
+            continue;
+        }
+
+        //BRSA命令
+        else if (command == "BRSA") {
+            PC = stack.back();
+            stack.pop_back();
+            continue;
         }
 
         //HALT命令の場合
