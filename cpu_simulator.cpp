@@ -11,26 +11,33 @@
 //empty() 空かどうかを確認
 //sort() データを並べ替え
 //reverse() 順番を逆にする
+//ignore() 入力の中に残っている不要な文字を読み飛ばす
+//getline() 1行全体を読み取る
 
 using namespace std;
 
 int main(void) {
 
 
-    //CPUが実行する命令
-    vector<string> program = {
-        "LDI 5",
-        "BSS 6",      
-        "WRITE",
-        "HALT",
+    //CPUが実行する命令を入力
+    vector<string> program;
 
-        "LDI 0",      
-        "LDI 0",      
+    int N;
+    cout << "命令数を入力してください";
+    cin >> N;
 
-        "ADD 0",      
-        "INC",         
-        "BRSA",       
-    };
+    cin.ignore();
+
+    cout << "命令を入力してください" << endl;
+
+    for (int i = 0; i < N; i++) {
+        string instruction;
+
+        cout << i << ": ";
+        getline(cin, instruction);
+
+        program.push_back(instruction);
+    }
 
     //レジスタ
     int A = 0;
