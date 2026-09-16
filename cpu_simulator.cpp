@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <windows.h>
 
 /*標準ライブラリ関数忘れた時用メモ*/
 //push_back() データを末尾に追加
@@ -18,6 +19,9 @@ using namespace std;
 
 int main(void) {
 
+                                 //CP_UTF8は、WindowsでUTF-8を表す定数。
+    SetConsoleOutputCP(CP_UTF8); //Windowsコンソールに出力する文字のコードページをUTF-8に設定
+    SetConsoleCP(CP_UTF8);       //Windowsコンソールから入力される文字のコードページをUTF-8に設定
 
     //CPUが実行する命令を入力
     vector<string> program;
@@ -53,6 +57,10 @@ int main(void) {
 
     while (true) {
 
+        if (PC < 0 || PC >= program.size()) {
+            cout << "PCが範囲外です。" << endl;
+            break;
+        }
 
         string instruction = program.at(PC);
 
