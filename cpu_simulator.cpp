@@ -74,6 +74,8 @@ int main(void) {
         cout << "PC = " << PC << endl;
         cout << "命令 = " << instruction << endl;
         cout << "値 = " << value << endl;
+        cout << "Enterキーを押すと実行します..." << endl;
+        cin.get();
 
         //LDI命令の場合
         if (command == "LDI") {
