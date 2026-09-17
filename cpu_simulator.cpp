@@ -77,31 +77,90 @@ int main(void) {
 
         //LDI命令の場合
         if (command == "LDI") {
+
+            if (value.empty()) {
+                cout << "error 値がありません。" << endl;
+                break;
+            }
+
             A = stoi(value);
+
         }
 
         //STO命令の場合
         else if (command == "STO") {
+
+            if (value.empty()) {
+                cout << "error 値がありません。" << endl;
+                break;
+            }
+
             int address = stoi(value);
+
+            if (address < 0 || address >= memory.size()) {
+                cout << "error メモリアドレスが範囲外です。" << endl;
+                break;
+            }
+
             memory.at(address) = A;
+
         }
 
         //LOAD命令の場合
         else if (command == "LOAD") {
-            int address = stoi(value);
-            A = memory.at(address);
-        }
 
+            if (value.empty()) {
+                cout << "error 値がありません。" << endl;
+                break;
+            }
+
+            int address = stoi(value);
+
+            if (address < 0 || address >= memory.size()) {
+                cout << "error メモリアドレスが範囲外です。" << endl;
+                break;
+            }
+
+            A = memory.at(address);
+
+        }
+ 
         //ADD命令
         else if (command == "ADD") {
+
+            if (value.empty()) {
+                cout << "error 値がありません。" << endl;
+                break;
+            }
+
             int address = stoi(value);
+
+            if (address < 0 || address >= memory.size()) {
+                cout << "error メモリアドレスが範囲外です。" << endl;
+                break;
+            }
+
              A = A + memory.at(address);
+
         }
 
         //SUB命令の場合
         else if (command == "SUB") {
+
+            if (value.empty()) {
+                cout << "error 値がありません。" << endl;
+                break;
+            }
+
             int address = stoi(value);
+
+            if (address < 0 || address >= memory.size()) {
+                cout << "error メモリアドレスが範囲外です。" << endl;
+                break;
+            }
+
             A = A - memory.at(address);
+
         }
 
         //INC命令の実行
@@ -126,38 +185,79 @@ int main(void) {
 
         //JMPの追加
         else if (command == "JMP") {
+
+            if (value.empty()) {
+                cout << "error 値がありません。" << endl;
+                break;
+            }
+
             PC = stoi(value);
             continue;
+
         }
 
         //JZERO命令の実装
         else if (command == "JZERO") {
+
             if (A == 0) {
+
+                if (value.empty()) {
+                    cout << "error 値がありません。" << endl;
+                    break;
+                }
+
                 PC = stoi(value);
                 continue;
+
             }
+
         }
 
         //JGTZ命令
         else if (command == "JGTZ") {
+
             if (A > 0) {
+
+                if (value.empty()) {
+                    cout << "error 値がありません。" << endl;
+                    break;
+                }
+
                 PC = stoi(value);
                 continue;
+
             }
+
         }
 
         //BSS命令
         else if (command == "BSS") {
+
             stack.push_back(PC + 1);
+
+            if (value.empty()) {
+                cout << "error 値がありません。" << endl;
+                break;
+             }
+
             PC = stoi(value);
             continue;
+
         }
 
         //BRSA命令
         else if (command == "BRSA") {
+
+            if (stack.empty()) {
+                cout << "error 戻り先が存在しません" << endl;
+                break;
+            }
+
             PC = stack.back();
             stack.pop_back();
+
             continue;
+
         }
 
         //HALT命令の場合
