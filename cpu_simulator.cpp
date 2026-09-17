@@ -17,6 +17,39 @@
 
 using namespace std;
 
+void show_cpu_state(int A, int PC, const vector<int> & memory, const vector<int> & stack) {
+    cout << endl;
+    cout << "========== CPUの状態 ==========" << endl;
+
+    //レジスタ
+    cout << "レジスタ" << endl;
+    cout << "A  : " << A << endl;
+    cout << "PC : " << PC << endl;
+
+    // メモリ
+    cout << endl;
+    cout << "メモリ" << endl;
+
+    for (int i = 0; i < memory.size(); i++) {
+        cout << "memory[" << i << "] = " << memory.at(i) << endl;
+    }
+
+    // スタック
+    cout << endl;
+    cout << "スタック" << endl;
+
+    if (stack.empty()) {
+        cout << "空です。" << endl;
+    }
+    else {
+        for (int i = 0; i < stack.size(); i++) {
+            cout << "stack[" << i << "] = " << stack.at(i) << endl;
+        }
+    }
+
+    cout << "===============================" << endl;
+}
+
 int main(void) {
 
                                  //CP_UTF8は、WindowsでUTF-8を表す定数。
@@ -235,12 +268,12 @@ int main(void) {
         //BSS命令
         else if (command == "BSS") {
 
-            stack.push_back(PC + 1);
-
             if (value.empty()) {
                 cout << "error 値がありません。" << endl;
                 break;
-             }
+            }
+
+            stack.push_back(PC + 1);
 
             PC = stoi(value);
             continue;
@@ -268,6 +301,7 @@ int main(void) {
             break;
         }
 
+        show_cpu_state(A, PC, memory, stack);
         PC++;
 
         if (PC >= program.size()) {
