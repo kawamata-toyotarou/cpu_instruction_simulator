@@ -15,3 +15,33 @@ g++ -finput-charset=UTF-8 -fexec-charset=UTF-8 cpu_simulator.cpp -o cpu_simulato
 
 .\cpu_simulator.exe
 行ファイルを実行する
+
+## 足し算プログラム
+5 + 3 = 8をするプログラム
+6
+LDI 5
+STO 0
+LDI 3
+ADD 0
+WRITE
+HALT
+
+## ループプログラム
+Aの値を3から1ずつ減らし、0になるまで繰り返す。
+6
+LDI 3
+WRITE
+DEC
+JZERO 6
+JMP 1
+HALT
+
+## サブルーチンプログラム
+BSS でサブルーチンへ移動し、BRSA で元の場所へ戻る。
+6
+LDI 5
+BSS 4
+WRITE
+HALT
+INC
+BRSA
