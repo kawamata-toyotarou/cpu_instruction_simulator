@@ -4,6 +4,7 @@
 #include <sstream>
 #include <windows.h>
 #include <limits>
+#include <stdexcept>
 
 /*標準ライブラリ関数忘れた時用メモ*/
 //push_back() データを末尾に追加
@@ -51,6 +52,32 @@ void show_cpu_state(int A, int PC, const vector<int> & memory, const vector<int>
     cout << "===============================" << endl;
 }
 
+
+/*tryとcatchとは*/
+//tryとはエラーが起こるかもしれない処理のついて記述し、実際にエラーが起こった時はcatchの処理が行われる
+bool try_parse_int(const string& value, int& result) {
+    try {
+        size_t pos;
+
+        result = stoi(value, &pos);
+
+        // 文字列全体が数字であるか確認
+        if (pos != value.size()) {
+            return false;
+        }
+
+        return true;
+    }
+
+    catch (const invalid_argument&) {  //invalid_argumentとは渡された引数が不正であるということ
+        return false;
+    }
+
+    catch (const out_of_range&) {      //out_of_rangeとは渡された引数が範囲を超えているということ
+        return false;
+    }
+}
+
 bool execute_instruction(const string& command, const string& value, int& A, int& PC, vector<int>& memory, vector<int>& stack) {
     
     //LDI命令の場合
@@ -61,7 +88,14 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
-        A = stoi(value);
+        int number;
+        
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: LDIの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
+        A = number;
         PC++;
 
     }
@@ -86,7 +120,14 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
-        PC = stoi(value);
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: JMPの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
+        PC = number;
 
     }
 
@@ -98,7 +139,14 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
-        int address = stoi(value);
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: STOの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
+        int address = number;
 
         if (address < 0 || address >= memory.size()) {
             cout << "error メモリアドレスが範囲外です。" << endl;
@@ -118,7 +166,14 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
-        int address = stoi(value);
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: LOADの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
+        int address = number;
 
         if (address < 0 || address >= memory.size()) {
             cout << "error メモリアドレスが範囲外です。" << endl;
@@ -137,7 +192,14 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
-        int address = stoi(value);
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: ADDの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
+        int address = number;
 
         if (address < 0 || address >= memory.size()) {
             cout << "error メモリアドレスが範囲外です。" << endl;
@@ -156,7 +218,14 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
-        int address = stoi(value);
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: SUBの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
+        int address = number;
 
         if (address < 0 || address >= memory.size()) {
             cout << "error メモリアドレスが範囲外です。" << endl;
@@ -170,7 +239,17 @@ bool execute_instruction(const string& command, const string& value, int& A, int
 
     //read命令の追加
     else if (command == "READ") {
-        cin >> A;
+        cout << "数値を入力してください: ";
+
+        if (!(cin >> A)) {
+            cout << "エラー: 数値を入力してください。" << endl;
+
+            cin.clear();                                         //cinがエラー状態になったとき、そのエラー状態を解除する。
+            cin.ignore(numeric_limits<streamsize>::max(), '\n'); //ignoreは入力ストリームに残っている文字を読み飛ばす numeric_limits<streamsize>::max()はstreamsize 型で扱える最大値を取得する
+
+            return false;
+        }
+
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
         PC++;
     }
@@ -189,8 +268,15 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: JZEROの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
         if (A == 0) {
-            PC = stoi(value);
+            PC = number;
         }
         else {
             PC++;
@@ -206,8 +292,15 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: JGTZの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
         if (A > 0) {
-            PC = stoi(value);
+            PC = number;
         }
         else {
             PC++;
@@ -222,9 +315,16 @@ bool execute_instruction(const string& command, const string& value, int& A, int
             return false;
         }
 
+        int number;
+
+        if (!try_parse_int(value, number)) {
+            cout << "エラー: BSSの値が数値ではありません: " << value << endl;
+            return false;
+        }
+
         stack.push_back(PC + 1);
 
-        PC = stoi(value);
+        PC = number;
 
     }
 
