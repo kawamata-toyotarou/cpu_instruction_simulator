@@ -355,6 +355,34 @@ bool execute_instruction(const string& command, const string& value, int& A, int
     return true;
 }
 
+void print_state_json(int A, int PC, const vector<int>& memory, const vector<int>& stack, bool running, const string& message) {
+    cout << "{";
+    cout << "\"A\":" << A << ",";
+    cout << "\"PC\":" << PC << ",";
+
+    cout << "\"memory\":[";
+    for (int i = 0; i < memory.size(); i++) {
+        cout << memory[i];
+        if (i != memory.size() - 1) {
+            cout << ",";
+        }
+    }
+        
+    cout << "],";
+    
+    cout << "\"stack\":[";
+    for (size_t i = 0; i < stack.size(); i++) {
+        cout << stack[i];
+        if (i != stack.size() - 1) cout << ",";
+    }
+    cout << "],";
+
+    cout << "\"running\":" << (running ? "true" : "false") << ",";
+    cout << "\"message\":\"" << message << "\"";
+    cout << "}" << endl;
+    
+}
+
 int main(void) {
 
                                  //CP_UTF8は、WindowsでUTF-8を表す定数。
@@ -365,18 +393,12 @@ int main(void) {
     vector<string> program;
 
     int N;
-    cout << "命令数を入力してください";
     cin >> N;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-    cout << "命令を入力してください" << endl;
-
     for (int i = 0; i < N; i++) {
         string instruction;
-
-        cout << i << ": ";
         getline(cin, instruction);
-
         program.push_back(instruction);
     }
 
@@ -392,10 +414,13 @@ int main(void) {
     //プログラムカウンタ
     int PC = 0;
 
+    // 初期状態を1行出力
+    print_state_json(A, PC, memory, stack, true, "初期状態");
+
     while (true) {
 
-        if (PC < 0 || PC >= program.size()) {
-            cout << "PCが範囲外です。" << endl;
+        if (PC < 0 || PC >= (int)program.size()) {
+            print_state_json(A, PC, memory, stack, false, "PCが範囲外です。");
             break;
         }
 
@@ -408,24 +433,17 @@ int main(void) {
         string value;
         ss  >> command >> value;
 
-        cout << "PC = " << PC << endl;
-        cout << "命令 = " << instruction << endl;
-        cout << "値 = " << value << endl;
-        cout << "Enterキーを押すと実行します..." << endl;
-        cin.get();
-
         bool running = execute_instruction(command, value, A, PC, memory, stack);
 
         if (!running) {
+            print_state_json(A, PC, memory, stack, false, command);
             break;
         }
 
-        show_cpu_state(A, PC, memory, stack);
+        print_state_json(A, PC, memory, stack, true, command);
 
     }
 
-    cout << endl;
-    
     return 0;
 
 }
