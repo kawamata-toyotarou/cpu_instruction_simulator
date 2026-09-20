@@ -50,3 +50,13 @@ WRITE
 HALT
 INC
 BRSA
+
+## Expressをインストール
+1.cd C:\Users\kawam\cpu_instruction_simulator
+
+2.Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy
+RemoteSigned
+
+3.npm install express
+
+これを用いて、run_cpu.jsでやっていたC++を起動してJSONを集める処理を、server.jsの中でAPIとして呼び出せる形にした。
