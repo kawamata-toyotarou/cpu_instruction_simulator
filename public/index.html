@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang = "ja">
+<head>
+    <meta charset="UTF-8">
+    <title>CPU Simulator</title>
+    <link rel = "stylesheet" href = "style.css">
+</head>
+<body>
+    <h1>CPU Simulator</h1>
+
+    <!--命令入力エリア-->
+    <div>
+        <h2>命令を入力(1行1命令)</h2>
+        <textarea id ="program-input" rows="10" col="40">  <!-- <textarea rows="10" cols="40"></textarea>は、10行、40列のテキストエリアを作成 -->
+            LDI 5
+            STO 0
+            LOAD 0
+            WRITE
+            HALT</textarea>
+    </div>
+
+    <!-- 操作ボタン -->
+    <div>
+        <button id = "run-button">実行</button>
+        <button id = "step-button">次のステップ</button>
+        <button id = "reset-button">リセット</button>
+    </div>
+
+    <!-- CPU状態表示エリア -->
+    <div id = "cpu-state">
+        <p>A: <span id = "reg-a">-</span></p>
+        <p>PC: <span id = "reg-pc">-</span></p>
+        <p>Memory: <span id = "memory-view">-</span></p>
+        <p>Stack: <span id = "stack-view">-</span></p>
+        <p>Message: <span id = "message-view">-</span></p>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

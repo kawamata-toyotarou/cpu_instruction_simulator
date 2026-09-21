@@ -16,15 +16,15 @@ const program = [
 function runCpu(program) {
 
     //Promiseとは他のプログラムの処理が実行された後に行われるもので処理が成功した時はresolve、失敗した時はreject
-    //cpu.exeの実行が終わるまで時間がかかるので、「終わったら教えてね」という予約をしている
+    //./cpu_simulator.exeの実行が終わるまで時間がかかるので、「終わったら教えてね」という予約をしている
     return new Promise((resolve, reject) => {
 
-        const cpu = spawn("./cpu_simulator.exe");          //spawn("./cpu.exe") で、実際に cpu.exe を別プロセスとして起動
+        const cpu = spawn("./cpu_simulator.exe");          //spawn("./cpu_simulator.exe") で、実際に ./cpu_simulator.exe を別プロセスとして起動
 
         const states = [];                       //states は、C++から送られてきたJSONを解析した結果を貯めていく空の配列
         let buffer = "";                         //まだ処理していない生の文字列データを一時的にためておく変数
 
-        cpu.stdout.on("data", (chunk) => {       //.on("data", 関数) は「データが送られてくるたびに、この関数を実行してね」という予約
+        cpu.stdout.on("data", (chunk) => {       //cpu.stdoutは、C++プログラムが標準出力に出したデータで.on("data", 関数) はデータが送られてくるたびに、この関数を実行してねという予約
             buffer += chunk.toString("utf8");    //chunkはバイナリなので.toString("utf8")で文字列に変換してbufferに追加
 
             let lines = buffer.split("\n");      //.split("\n") は、文字列を改行文字で分割して配列にするメソッド
@@ -38,7 +38,7 @@ function runCpu(program) {
 
                 try {
                     const state = JSON.parse(trimmed);  //JSON形式の文字列をJavaScriptのオブジェクトに変換
-                    states.push(state);                 //変換できたものだけstates配列の末尾に追加(C++のpush_backと同じ)
+                    states.push(state);                 //変換できたものだけstates配列の末尾に追加
                 } catch (e) {
                     console.log("(skip) 非JSON行:", trimmed); //JSONとして読めなかった行(errorなど)は無視してスキップ
                 }
