@@ -1,0 +1,25 @@
+@charset "utf-8";
+
+body {
+    /* font-family は、どのフォントで文字を表示するかを指定する
+    sans-seriは環境にあるサンセリフ体のフォントをブラウザが選ぶ */
+    font-family: sans-serif;
+    padding: 20px; /*内側の余白*/
+}
+
+textarea {
+    font-family: monospace;        /*monospaceは全ての文字を同じ大きさにするfont*/
+    font-size: 14px;
+}
+
+#cpu-state {
+    margin-top: 20px;              /*要素の外側に20pxの空間を作る指定*/
+    padding: 15px;                 /*要素の内側に15pxの余白*/
+    border: 1px solid #ccc;      /*solidは実線*/
+    width: 400px;
+}
+
+button {
+    margin-right: 10px;
+    padding: 5px 15px;             /*2つの値を書くと、順番で上下(5px)と左右(15px)を指定*/
+}
