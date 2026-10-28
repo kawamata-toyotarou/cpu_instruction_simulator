@@ -60,3 +60,19 @@ RemoteSigned
 3.npm install express
 
 これを用いて、run_cpu.jsでやっていたC++を起動してJSONを集める処理を、server.jsの中でAPIとして呼び出せる形にした。
+
+## Web版の起動
+
+前述の手順で `cpp/cpu_simulator.exe` を作成してから、
+リポジトリのルートで以下を実行します。
+
+Node.jsは、セキュリティ修正済みの24.22.1以降の24系を使用してください。
+
+```powershell
+npm ci
+node server/server.js
+```
+
+起動したら、ブラウザで http://localhost:3000 を開きます。
+
+サーバーを停止するには、PowerShellで Ctrl+C を押します。
