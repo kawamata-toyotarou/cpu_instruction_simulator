@@ -14,7 +14,7 @@ const app = express();
 const PORT = 3000;
 
 //JSON形式のリクエストボディを読み取れるようにする設定
-app.use(express.json());
+app.use(express.json({ inflate: false }));
 
 //publicフォルダの中身をそのままブラウザに公開する設定
 app.use(express.static(path.join(__dirname, "..", "public")));
